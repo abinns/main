@@ -14,11 +14,16 @@ public class MiniAppMonitor
 
 	public MiniAppMonitor(String basedir)
 	{
+		U.p("Starting");
 		this.basedir = basedir;
-		for (File cur : new File(basedir).listFiles())
-			try
+		File base = new File(basedir);
+		if (base.exists())
+			for (File cur : base.listFiles())
+				if (cur.toString().endsWith(".jar"))
+					if (new File(U.withExt(cur, ".conf")).exists())
+						try
 		{
-				this.load(cur);
+							this.load(cur, new File(U.withExt(cur, ".conf"))).start(null);
 		} catch (AppLoadException e)
 		{
 			U.e("Error loading from file " + cur);
@@ -30,23 +35,18 @@ public class MiniAppMonitor
 		return this.basedir;
 	}
 
-	private App load(File cur) throws AppLoadException
+	private App load(File cur, File configdocs) throws AppLoadException
 	{
-		ClassLoader authorizedLoader = null;
+		AppConfig conf = new AppConfig(configdocs);
+		U.p("Attempting to " + conf.getClassName() + " load from " + cur.getAbsolutePath());
 		try
 		{
-			authorizedLoader = URLClassLoader.newInstance(new URL[]
-					{ new URL(cur.getAbsolutePath()) });
-		} catch (MalformedURLException e)
+			URL url = cur.toURI().toURL();
+			ClassLoader loader = URLClassLoader.newInstance(new URL[] { url });
+			return (App) loader.loadClass(conf.getClassName()).newInstance();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | MalformedURLException e)
 		{
-			throw new AppLoadException("Error loading url from file " + cur);
-		}
-		try
-		{
-			return (App) authorizedLoader.loadClass("abinns.appserv.appmanager.App").newInstance();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e)
-		{
-			e.printStackTrace();
+			U.e("Error loading class" + conf.getClassName() + " from " + cur.getAbsolutePath() + ".", e);
 		}
 		return null;
 

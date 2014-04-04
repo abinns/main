@@ -1,6 +1,6 @@
 package abinns.appserv.appmanager;
 
-public interface App
+public abstract class App
 {
-	public void start(AppContext con);
+	public abstract void start(AppContext con);
 }
