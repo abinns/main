@@ -3,8 +3,8 @@ package backend;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -18,8 +18,8 @@ public class U
 {
 	private static PrintStream		output;
 	private static int				debugging	= 0;
-	private static SimpleDateFormat	formatter	= new SimpleDateFormat(
-														"HH:mm:ss.SSSS");
+	private static DateTimeFormatter	formatter	= DateTimeFormatter.ofPattern(
+														"HH:mm:ss.SSS");
 	private static Scanner			input;
 
 	/**
@@ -143,7 +143,7 @@ public class U
 	private static void printWithTag(String in, String tag)
 	{
 		StringBuilder res = new StringBuilder();
-		res.append(formatter.format(Calendar.getInstance().getTime()));
+		res.append(LocalDateTime.now().format(formatter));
 		res.append("[");
 		res.append(tag);
 		res.append("] ");
