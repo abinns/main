@@ -2,18 +2,22 @@ package abinns.appserv.appmanager;
 
 import java.io.File;
 
+import abinns.appserv.appmanager.parser.Parser;
+
 public class AppConfig
 {
 
+	private String	classname;
+
 	public AppConfig(File configdocs)
 	{
-		// TODO Auto-generated constructor stub
+		Parser parser = new Parser(configdocs);
+		this.classname = parser.getTextFromTag("classname");
 	}
 
 	public String getClassName()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.classname;
 	}
 
 }
