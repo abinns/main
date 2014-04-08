@@ -19,45 +19,35 @@ import abinns.appserv.backend.U;
 
 public class Parser
 {
-	private DocumentBuilderFactory	factory	= DocumentBuilderFactory
-													.newInstance();
+	private DocumentBuilderFactory	factory	= DocumentBuilderFactory.newInstance();
 	private DocumentBuilder			builder;
 	private Document				doc;
-
-	public Parser(String filename)
-	{
-		this(new File(filename));
-	}
 
 	public Parser(File file)
 	{
 		U.p("Loading xml tree from " + file);
-		factory.setIgnoringElementContentWhitespace(true);
+		this.factory.setIgnoringElementContentWhitespace(true);
 
 		try
 		{
-			builder = factory.newDocumentBuilder();
-			doc = builder.parse(file);
+			this.builder = this.factory.newDocumentBuilder();
+			this.doc = this.builder.parse(file);
 		} catch (ParserConfigurationException | SAXException | IOException e1)
 		{
 			U.e("Error parsing xml file " + file);
 		}
 	}
 
-	public String getTextFromTag(String tagname)
+	public Parser(String filename)
 	{
-		Element e = (Element) doc.getElementsByTagName(tagname).item(0);
-		if (e != null)
-			return e.getFirstChild().getNodeValue();
-		return "";
+		this(new File(filename));
 	}
 
 	public LinkedList<ParsedElement> getElementsByTag(String enclosing)
 	{
 		LinkedList<ParsedElement> res = new LinkedList<ParsedElement>();
 
-		Element elements = (Element) doc.getElementsByTagName(enclosing).item(
-				0);
+		Element elements = (Element) this.doc.getElementsByTagName(enclosing).item(0);
 		NodeList list = elements.getChildNodes();
 		int elementCount = list.getLength();
 
@@ -68,8 +58,7 @@ public class Parser
 			{
 				Node first = e.getFirstChild();
 
-				ParsedElement p = new ParsedElement(e.getNodeName(),
-						first.getNodeValue());
+				ParsedElement p = new ParsedElement(e.getNodeName(), first.getNodeValue());
 				NamedNodeMap attrs = e.getAttributes();
 				if (attrs != null)
 				{
@@ -86,5 +75,13 @@ public class Parser
 		}
 
 		return res;
+	}
+
+	public String getTextFromTag(String tagname)
+	{
+		Element e = (Element) this.doc.getElementsByTagName(tagname).item(0);
+		if (e != null)
+			return e.getFirstChild().getNodeValue();
+		return "";
 	}
 }

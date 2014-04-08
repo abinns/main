@@ -1,14 +1,16 @@
 package abinns.appserv.appmanager;
 
+import abinns.appserv.appcontext.AppContext;
+
 public interface App
 {
-	public void start(AppContext con);
-	
-	public void halt();
-	
-	public String getName();
-	
-	public String getStatus();
-	
 	public String getDescription();
+
+	public String getName();
+
+	public String getStatus();
+
+	public void halt();
+
+	public void start(AppContext con);
 }

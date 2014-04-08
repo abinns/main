@@ -6,6 +6,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.LinkedList;
 
+import abinns.appserv.appcontext.AppContext;
 import abinns.appserv.backend.U;
 import abinns.appserv.exceptions.AppLoadException;
 
@@ -13,22 +14,34 @@ public class MiniAppMonitor
 {
 	private LinkedList<App>	apps;
 
+	private AppContext		context;
+
 	public MiniAppMonitor(String basedir)
 	{
 		this.apps = new LinkedList<App>();
+		this.context = new AppContext();
 
 		U.p("Loading base from path " + basedir);
 		File base = new File(basedir);
 
-		loadFromDir(base);
-		
+		this.loadFromDir(base);
+
 		this.start();
 	}
-	
-	public void start()
+
+	private App load(File appContainer, File configDocs) throws AppLoadException
 	{
-		for(App cur : this.apps)
-			cur.start(null);
+		AppConfig conf = new AppConfig(configDocs);
+		U.p("Attempting to load " + conf.getClassName() + " from " + appContainer.getAbsolutePath());
+		try
+		{
+			URL url = appContainer.toURI().toURL();
+			ClassLoader loader = URLClassLoader.newInstance(new URL[] { url });
+			return (App) loader.loadClass(conf.getClassName()).newInstance();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | MalformedURLException e)
+		{
+			throw new AppLoadException("Error loading class" + conf.getClassName() + " from " + appContainer.getAbsolutePath() + ".");
+		}
 	}
 
 	private void loadFromDir(File base)
@@ -37,33 +50,22 @@ public class MiniAppMonitor
 			for (File cur : base.listFiles())
 				if (cur.toString().endsWith(".jar"))
 				{
-					File conf = new File(U.withExt(cur, ".conf"));
+					File conf = new File(U.changeExtTo(cur, ".conf"));
 					if (conf.exists())
 						if (!conf.isDirectory())
 							try
-							{
-								this.apps.add(this.load(cur, new File(U.withExt(cur, ".conf"))));
-							} catch (AppLoadException e)
-							{
-								U.e("Error loading from file " + cur);
-							}
+					{
+								this.apps.add(this.load(cur, new File(U.changeExtTo(cur, ".conf"))));
+					} catch (AppLoadException e)
+					{
+						U.e("Error loading from file " + cur);
+					}
 				}
 	}
 
-	private App load(File cur, File configdocs) throws AppLoadException
+	public void start()
 	{
-		AppConfig conf = new AppConfig(configdocs);
-		U.p("Attempting to load " + conf.getClassName() + " from " + cur.getAbsolutePath());
-		try
-		{
-			URL url = cur.toURI().toURL();
-			ClassLoader loader = URLClassLoader.newInstance(new URL[] { url });
-			return (App) loader.loadClass(conf.getClassName()).newInstance();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | MalformedURLException e)
-		{
-			U.e("Error loading class" + conf.getClassName() + " from " + cur.getAbsolutePath() + ".", e);
-		}
-		return null;
-
+		for (App cur : this.apps)
+			cur.start(this.context);
 	}
 }

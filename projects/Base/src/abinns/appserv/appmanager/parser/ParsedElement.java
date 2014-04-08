@@ -22,9 +22,14 @@ public class ParsedElement
 		this.attrList.add(attribute);
 	}
 
-	public String getValue()
+	public LinkedList<String> getAttrList()
 	{
-		return value;
+		return this.attrList;
+	}
+
+	public HashMap<String, String> getAttrs()
+	{
+		return this.attrs;
 	}
 
 	public String getType()
@@ -32,14 +37,9 @@ public class ParsedElement
 		return this.type;
 	}
 
-	public HashMap<String, String> getAttrs()
+	public String getValue()
 	{
-		return attrs;
-	}
-
-	public LinkedList<String> getAttrList()
-	{
-		return attrList;
+		return this.value;
 	}
 
 	@Override

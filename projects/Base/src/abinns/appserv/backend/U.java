@@ -33,6 +33,22 @@ public class U
 	}
 
 	/**
+	 * Simple little function do so some substring magics to rename get a file
+	 * with the same name but a different extension
+	 *
+	 * @param cur
+	 *            the base file
+	 * @param nExt
+	 *            the new extension desired
+	 * @return a string with the original filename, but modified with the new
+	 *         extension.
+	 */
+	public static String changeExtTo(File cur, String nExt)
+	{
+		return cur.getAbsolutePath().substring(0, cur.getAbsolutePath().lastIndexOf(".")) + nExt;
+	}
+
+	/**
 	 * Simple confirmation function, returns a true or false in response to the
 	 * passed message.
 	 *
@@ -90,7 +106,8 @@ public class U
 	 */
 	public static void d(String in, int level)
 	{
-		if (U.debugging >= level) U.printWithTag(in, "DEBUG");
+		if (U.debugging >= level)
+			U.printWithTag(in, "DEBUG");
 	}
 
 	/**
@@ -270,21 +287,5 @@ public class U
 		{
 			U.e("Error sleeping", e);
 		}
-	}
-	
-	/**
-	 * Simple little function do so some substring magics to rename get a file
-	 * with the same name but a different extension
-	 * 
-	 * @param cur
-	 *            the base file
-	 * @param nExt
-	 *            the new extension desired
-	 * @return a string with the original filename, but modified with the new
-	 *         extension.
-	 */
-	public static String withExt(File cur, String nExt)
-	{
-        return cur.getAbsolutePath().substring(0, cur.getAbsolutePath().lastIndexOf(".")) + nExt;
 	}
 }
