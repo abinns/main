@@ -7,7 +7,7 @@ public class Driver
 
 	public static void main(String[] args)
 	{
-		MiniAppMonitor mon = new MiniAppMonitor("..\\..\\..\\..\\apps\\");
+		MiniAppMonitor mon = new MiniAppMonitor("..\\!apps\\");
 	}
 
 }
