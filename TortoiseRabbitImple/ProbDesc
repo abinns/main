@@ -1,0 +1,66 @@
+This is gonna be the tale of the rabbit and the tortoise. Since I suck at storytelling,
+I'm gonna cut to the chase.
+ 
+You're gonna recreate the fable by simulating the race in realtime. Here's what I want you to do:
+ 
+*** I want you to print to console (or an output file) something like this at every step of the race:
+Sample Output 1 (a turn):
+***********
+--------------------------T-----------------F
+--------------------------------R-----------F
+ 
+Who is in the lead? The rabbit.
+By how much? 6 m.
+***********
+(dont out put this, this is for you to understand)
+Legend:
+- = a position on the track
+T = the current position of the Tortoise
+R = the current position of the Hare
+ 
+- When the race ends, I want you to have the following output:
+Sample Output 2 (the final turn):
+***********
+--------------------------------------------T
+-----------------------------------------H--F
+ 
+Who is in the lead? The Tortoise
+By how much? 3 m.
+***********
+ 
+We have a winner! The winner is the Tortoise!
+It took 57 turns for a winner to be crowned.
+***********
+ 
+*** Additional info
+- The track is 70 m long. Each -, T, R, F as seen in the sample above represents 1 m. There is no
+position 0.
+(ie the initial state looks like this : ---------------------------------F, aka no T or R is shown)
+- You will print the sample output 1 each turn.
+- The rabbit moves as so each "turn": -2m , -1m, 3m, 4m. One after the other and then repeat. So turn 1
+is -2, turn 2 is -1 and turn 5 is -2.
+- The tortoise moves as so each "turn": -1m , 0m, 1m, 2m. One after the other and then repeat.
+- If a contestant is at 0, and rolls a negative step, they stay at 0.
+- If a contestant is going to go above the finish line, they end up at the finish line.
+ 
+*** Tips
+- Try to keep things seperate. Aka for example: don't code the Tortoise so that changing the Rabbit's code
+affects the Tortoise code.
+ 
+- List of things that I want to be able to change on the fly (for example on user input, but don't code for
+user input, just code as IF user could decide this easily).
+** Track length (set here as 70)
+** Probability of each step (hard, but give it a try if you can)
+** The possible steps that can be done (I'm talking about the -1m, 0m, 1m, 2m I wrote above, harder than
+above. Extra: allow for X possible steps as opposed to 4 possible steps.)
+ 
+*** Final Task
+After you've made this work once (and shown it to me), I want you to simulate 100 races and give me the
+proportion of wins each contestant has.
+ 
+END instructions.
+ 
+Super challenge:
+Allow the user, through a series of message prompts (console or otherwise) to set the number of contestants,
+the possible steps of each contestant and their associated chance of happening and the track length as well
+as the number of races to simulate.

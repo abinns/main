@@ -41,6 +41,6 @@ local.properties
 test.db
 
 # Ignored projects
-PersonalTestBed/
+Fastex/
 SNMPPlugin/snmp4j-2.2.5-javadoc.jar
 SNMPPlugin/snmp4j-2.2.5.jar
