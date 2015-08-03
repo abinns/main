@@ -1,7 +1,5 @@
 package backend;
 
-import global.Globals;
-
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,6 +25,7 @@ import java.util.Scanner;
 
 import backend.lib.lzmastreams.LzmaInputStream;
 import backend.lib.lzmastreams.LzmaOutputStream;
+import global.Globals;
 
 /**
  * Utility class, handles printing output nicely, as well as multiple levels of
@@ -37,7 +36,7 @@ import backend.lib.lzmastreams.LzmaOutputStream;
 public class U
 {
 	private static PrintStream								output;
-	// Note, don't go changing this, go use the mother-fucking correct way of
+	// Note, don't go changing this, go use the correct way of
 	// setting debug level, the function exists for a reason.
 	private static int										debugging			= 0;
 	private static SimpleDateFormat							outputFormatter		= new SimpleDateFormat("HH:mm:ss.SSS");
