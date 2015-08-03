@@ -3,4 +3,7 @@
     <library name="jdi" systemlibrary="false">
         <archive path="/Backend/lib/jdi.jar"/>
     </library>
+    <library name="lwjgl3" systemlibrary="false">
+        <archive javadoc="jar:platform:/resource/Backend/libdoc/javadoc.zip!/" nativelibpaths="Backend/libnatives/lwjgl" path="/Backend/lib/lwjgl.jar"/>
+    </library>
 </eclipse-userlibraries>
