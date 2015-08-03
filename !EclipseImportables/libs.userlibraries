@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<eclipse-userlibraries version="2">
+    <library name="jdi" systemlibrary="false">
+        <archive path="/Backend/lib/jdi.jar"/>
+    </library>
+</eclipse-userlibraries>
