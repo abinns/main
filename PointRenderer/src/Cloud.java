@@ -15,7 +15,7 @@ public class Cloud
 	public Cloud()
 	{
 		this(new float[]
-		{ 0, 0, 1, 0, 0, 1.5f, 0, 0, 0 });
+		{ 0, 1, 0, 0, 1, 0, 0, 1, 0 });
 	}
 
 	public Cloud(float[] points)
@@ -26,7 +26,7 @@ public class Cloud
 
 		FloatBuffer verticies = BufferUtils.createFloatBuffer(points.length);
 		verticies.put(points);
-		verticies.rewind();
+		// verticies.rewind();
 		vertexBufferData(vertexBufferID, verticies);
 	}
 
