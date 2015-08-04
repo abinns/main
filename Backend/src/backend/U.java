@@ -35,14 +35,14 @@ import global.Globals;
  */
 public class U
 {
-	private static PrintStream								output;
+	private static PrintStream		output;
 	// Note, don't go changing this, go use the correct way of
 	// setting debug level, the function exists for a reason.
-	private static int										debugging			= 0;
-	private static SimpleDateFormat							outputFormatter		= new SimpleDateFormat("HH:mm:ss.SSS");
-	private static SimpleDateFormat							timeStampFormatter	= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS");
-	private static Scanner									input;
-	private static Random									rand;
+	private static int				debugging			= 0;
+	private static SimpleDateFormat	outputFormatter		= new SimpleDateFormat("HH:mm:ss.SSS");
+	private static SimpleDateFormat	timeStampFormatter	= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS");
+	private static Scanner			input;
+	private static Random			rand;
 
 	/**
 	 * Static constructor, used to initialize output to the system.out
@@ -56,7 +56,7 @@ public class U
 		U.rand = new Random();
 	}
 
-	private static final LinkedHashMap<Class<?>, Class<?>>	WRAPPER_TYPES		= U.getWrapperTypes();
+	private static final LinkedHashMap<Class<?>, Class<?>> WRAPPER_TYPES = U.getWrapperTypes();
 
 	/**
 	 * Calls the specified method with the specified parameters, checking to
@@ -614,5 +614,18 @@ public class U
 	public float rand(float min, float max)
 	{
 		return U.rand.nextFloat() * (max - min) + min;
+	}
+
+	public static String loadAsString(String path)
+	{
+		try
+		{
+			return new String(Files.readAllBytes(Paths.get(path)));
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
 	}
 }
