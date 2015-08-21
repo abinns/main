@@ -1,12 +1,10 @@
-package game;
+package engine;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
-
-import backend.PieceUpdater;
 
 public class Piece
 {

@@ -9,8 +9,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import backend.Renderable;
-import backend.Updateable;
+import engine.Projectile;
+import engine.Renderable;
+import engine.Updateable;
+import engine.Vec2;
 
 public class TowerTestGame implements Game
 {
@@ -27,9 +29,16 @@ public class TowerTestGame implements Game
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
-		Projectile proj = Projectile.genTestCursorCircles(new Vec2(0, 0), 10, Color.blue, Color.green, Color.red, Color.magenta);
+		Projectile proj = Projectile.genTestCursorCircles(new Vec2(0, 0), 8, Color.blue, Color.green, Color.red, Color.magenta);
 		this.renderables.add(proj);
 		this.updateables.add(proj);
+
+		for (int i = 0; i < 10000; i++)
+		{
+			proj = Projectile.genBouncer(gc.getWidth(), gc.getHeight());
+			this.renderables.add(proj);
+			this.updateables.add(proj);
+		}
 	}
 
 	@Override

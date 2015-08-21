@@ -1,6 +1,4 @@
-package backend;
-
-import game.Vec2;
+package engine;
 
 @FunctionalInterface
 public interface PieceUpdater

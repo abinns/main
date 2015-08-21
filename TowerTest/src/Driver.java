@@ -14,7 +14,7 @@ public class Driver
 		{
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new TowerTestGame());
-			appgc.setDisplayMode(640, 480, false);
+			appgc.setDisplayMode(1024, 600, false);
 			appgc.start();
 		} catch (SlickException ex)
 		{
