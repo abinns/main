@@ -33,7 +33,7 @@ public class TowerTestGame implements Game
 		this.renderables.add(proj);
 		this.updateables.add(proj);
 
-		for (int i = 0; i < 10000; i++)
+		for (int i = 0; i < 20; i++)
 		{
 			proj = Projectile.genBouncer(gc.getWidth(), gc.getHeight());
 			this.renderables.add(proj);
@@ -44,15 +44,19 @@ public class TowerTestGame implements Game
 	@Override
 	public void update(GameContainer gc, int millis) throws SlickException
 	{
-		for (Updateable u : this.updateables)
-			u.update(gc, millis);
+		// for (Updateable u : this.updateables)
+		// u.update(gc, millis);
+		for (int i = 0; i < this.updateables.size(); i++)
+			this.updateables.get(i).update(gc, millis);
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		for (Renderable r : this.renderables)
-			r.render(gc, g);
+		// for (Renderable r : this.renderables)
+		// r.render(gc, g);
+		for (int i = 0; i < this.renderables.size(); i++)
+			this.renderables.get(i).render(gc, g);
 	}
 
 	@Override

@@ -13,12 +13,10 @@ public class Projectile implements Renderable, Updateable
 {
 	private List<Piece>			shapes;
 	private Vec2				pos;
-	private double				time;
 	private Consumer<Integer>	tick;
 
 	private Projectile(Vec2 pos)
 	{
-		time = 0;
 		this.pos = pos;
 		shapes = new ArrayList<>();
 	}
@@ -30,15 +28,20 @@ public class Projectile implements Renderable, Updateable
 		Projectile proj = new Projectile(Vec2.random(0, 0, width, height));
 		Vec2 vel = Vec2.random(-10, -10, 10, 10);
 		ThreadLocalRandom rand = ThreadLocalRandom.current();
+		float buffer = 20.0f;
 		proj.tick = in -> {
 		};
-		proj.shapes.add(Piece.genCircle(proj.pos, rand.nextFloat() * 10 + 5, new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()), (origin, result, delta) -> {
-			if (result.x + vel.x > width || result.x + vel.x < 0)
-				vel.x = -vel.x;
-			if (result.y + vel.y > width || result.y + vel.y < 0)
-				vel.y = -vel.y;
+		proj.shapes.add(Piece.genCircle(proj.pos, rand.nextFloat() * 10 + 1, new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()), (origin, result, delta) -> {
 			result.x += vel.x / 10 * delta;
 			result.y += vel.y / 10 * delta;
+			if (result.x < buffer)
+				result.x = width - buffer;
+			if (result.x > width - buffer)
+				result.x = buffer;
+			if (result.y < 10.0)
+				result.y = height - buffer;
+			if (result.y > height - buffer)
+				result.y = buffer;
 		}));
 
 		return proj;
@@ -77,8 +80,8 @@ public class Projectile implements Renderable, Updateable
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		for (Piece cur : this.shapes)
-			cur.render(gc, g);
+		for (int i = 0; i < this.shapes.size(); i++)
+			this.shapes.get(i).render(gc, g);
 	}
 
 	@Override
@@ -87,7 +90,9 @@ public class Projectile implements Renderable, Updateable
 		pos.x = gc.getInput().getMouseX();
 		pos.y = gc.getInput().getMouseY();
 		this.tick.accept(millis);
-		for (Piece cur : this.shapes)
-			cur.update(gc, millis, this.pos);
+		// for (Piece cur : this.shapes)
+		// cur.update(gc, millis, this.pos);
+		for (int i = 0; i < this.shapes.size(); i++)
+			this.shapes.get(i).update(gc, millis, this.pos);
 	}
 }

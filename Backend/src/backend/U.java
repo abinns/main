@@ -1,7 +1,6 @@
 package backend;
 
 import java.io.Closeable;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -25,7 +24,6 @@ import java.util.Scanner;
 
 import backend.lib.lzmastreams.LzmaInputStream;
 import backend.lib.lzmastreams.LzmaOutputStream;
-import global.Globals;
 
 /**
  * Utility class, handles printing output nicely, as well as multiple levels of
@@ -267,31 +265,6 @@ public class U
 	}
 
 	/**
-	 * Attempts to open the file listed, if it can't kills the program with an
-	 * error message.
-	 * <p>
-	 * <b>NOTE: If this file isn't required, do something else!</b>
-	 * </p>
-	 *
-	 * @param filename
-	 *            the file to try and open
-	 * @return a scanner to the given file
-	 */
-
-	public static Scanner loadFile(String filename)
-	{
-		try
-		{
-			return new Scanner(new File(filename));
-		} catch (FileNotFoundException e)
-		{
-			U.e("Error opening file " + filename, e);
-			Globals.exit();
-		}
-		return null;
-	}
-
-	/**
 	 * Given a filename, reads an object from it. Note: make sure you are
 	 * reading into the correct class (and version of the class), otherwise
 	 * ClassNotFound exceptions will be thrown.
@@ -463,41 +436,6 @@ public class U
 	}
 
 	/**
-	 * Given a file, attempts to load the contents as a string. Assumes UTF_8
-	 * encoding. Returns "" if any kind of error.
-	 *
-	 * @param path
-	 *            the file to open
-	 * @return the contents of the specified file
-	 */
-
-	public static String readFile(String path)
-	{
-		return U.readFile(path, StandardCharsets.UTF_8);
-	}
-
-	/**
-	 * Given a file and encoding, attempts to load the contents as a string.
-	 * Returns "" if any kind of error.
-	 *
-	 * @param path
-	 *            the file to open
-	 * @param encoding
-	 * @return the contents of the specified file
-	 */
-	public static String readFile(String path, Charset encoding)
-	{
-		try
-		{
-			return new String(Files.readAllBytes(Paths.get(path)), encoding);
-		} catch (IOException e)
-		{
-			U.e("Error reading from file " + path);
-			return "";
-		}
-	}
-
-	/**
 	 * Sets the debugging level to something new. Used so that the debugging
 	 * level is set in the main, and not forgotten about... For example: 10
 	 * should be used for all internal U.java debugging messages.
@@ -614,18 +552,5 @@ public class U
 	public float rand(float min, float max)
 	{
 		return U.rand.nextFloat() * (max - min) + min;
-	}
-
-	public static String loadAsString(String path)
-	{
-		try
-		{
-			return new String(Files.readAllBytes(Paths.get(path)));
-		} catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "";
 	}
 }

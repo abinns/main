@@ -1,7 +1,16 @@
 package global;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedList;
+import java.util.Scanner;
 
+import backend.U;
 import backend.functionInterfaces.Func;
 
 public class Globals
@@ -11,6 +20,11 @@ public class Globals
 	static
 	{
 		Globals.onClose = new LinkedList<Func>();
+		// Adds shutdown hook, executes items prior to ending.
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			for (Func f : Globals.onClose)
+				f.exec();
+		}));
 	}
 
 	/**
@@ -20,18 +34,63 @@ public class Globals
 	 *            the lambda to add
 	 */
 
-	public static void addExitHandler(Func f)
+	public static void registerExitHandler(Func f)
 	{
 		Globals.onClose.add(f);
 	}
 
 	/**
-	 * Wrapper call for System.exit, calls registered handlers before exiting.
+	 * Attempts to open the file specified.
+	 *
+	 * @param filename
+	 *            the file to try and open
+	 * @return a scanner to the given file
 	 */
-	public static void exit()
+	
+	public static Scanner openScannerOnFile(String filename)
 	{
-		for (Func f : Globals.onClose)
-			f.exec();
-		System.exit(0);
+		try
+		{
+			return new Scanner(new File(filename));
+		} catch (FileNotFoundException e)
+		{
+			U.e("Error opening file " + filename, e);
+		}
+		return null;
+	}
+
+	/**
+	 * Given a file, attempts to load the contents as a string. Assumes UTF_8
+	 * encoding. Returns "" if any kind of error.
+	 *
+	 * @param path
+	 *            the file to open
+	 * @return the contents of the specified file
+	 */
+	
+	public static String readFile(String path)
+	{
+		return Globals.readFile(path, StandardCharsets.UTF_8);
+	}
+
+	/**
+	 * Given a file and encoding, attempts to load the contents as a string.
+	 * Returns "" if any kind of error.
+	 *
+	 * @param path
+	 *            the file to open
+	 * @param encoding
+	 * @return the contents of the specified file
+	 */
+	public static String readFile(String path, Charset encoding)
+	{
+		try
+		{
+			return new String(Files.readAllBytes(Paths.get(path)), encoding);
+		} catch (IOException e)
+		{
+			U.e("Error reading from file " + path);
+			return "";
+		}
 	}
 }
