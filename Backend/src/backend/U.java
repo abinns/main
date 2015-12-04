@@ -1,14 +1,7 @@
 package backend;
 
-import java.io.Closeable;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintStream;
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
@@ -18,12 +11,10 @@ import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
-
-import backend.lib.lzmastreams.LzmaInputStream;
-import backend.lib.lzmastreams.LzmaOutputStream;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Utility class, handles printing output nicely, as well as multiple levels of
@@ -34,13 +25,13 @@ import backend.lib.lzmastreams.LzmaOutputStream;
 public class U
 {
 	private static PrintStream		output;
-	// Note, don't go changing this, go use the correct way of
-	// setting debug level, the function exists for a reason.
+	/**
+	 * Debugging level, should be set with {@link U#setDebugLevel(int)}
+	 */
 	private static int				debugging			= 0;
 	private static SimpleDateFormat	outputFormatter		= new SimpleDateFormat("HH:mm:ss.SSS");
 	private static SimpleDateFormat	timeStampFormatter	= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS");
 	private static Scanner			input;
-	private static Random			rand;
 
 	/**
 	 * Static constructor, used to initialize output to the system.out
@@ -51,15 +42,12 @@ public class U
 	{
 		U.output = System.out;
 		U.input = new Scanner(System.in);
-		U.rand = new Random();
 	}
 
-	private static final LinkedHashMap<Class<?>, Class<?>> WRAPPER_TYPES = U.getWrapperTypes();
+	private static final Map<Class<?>, Class<?>> WRAPPER_TYPES = U.getWrapperTypes();
 
 	/**
-	 * Calls the specified method with the specified parameters, checking to
-	 * make sure passed arguments match required ones before attempting an
-	 * invocation.
+	 * Calls the specified method with the specified parameters.
 	 *
 	 * @param <T>
 	 * @param method
@@ -75,22 +63,14 @@ public class U
 	@SuppressWarnings("unchecked")
 	public static <T> T carefulCall(Method method, Object target, Object... params) throws InvalidParameterException
 	{
-		Object res = null;
-		// int i = 0;
-		// for (Class<?> c : method.getParameterTypes())
-		// if (!c.equals(U.getUnBoxedType(params[i++].getClass())))
-		// U.w("Input item " + params[i - 1].getClass().getName() +
-		// " may be incompatible with " + c.getName() + " for method " +
-		// method.getName());
-
 		try
 		{
-			res = method.invoke(target, params);
+			return (T) method.invoke(target, params);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
 		{
 			U.e("Error, could not properly call method " + method.getName(), e);
+			return null;
 		}
-		return (T) res;
 	}
 
 	/**
@@ -237,9 +217,9 @@ public class U
 		return input;
 	}
 
-	private static LinkedHashMap<Class<?>, Class<?>> getWrapperTypes()
+	private static Map<Class<?>, Class<?>> getWrapperTypes()
 	{
-		LinkedHashMap<Class<?>, Class<?>> ret = new LinkedHashMap<Class<?>, Class<?>>();
+		Map<Class<?>, Class<?>> ret = new HashMap<>();
 		ret.put(Boolean.class, boolean.class);
 		ret.put(Character.class, char.class);
 		ret.put(Byte.class, byte.class);
@@ -262,92 +242,6 @@ public class U
 	public static boolean isWrapperType(Class<?> clazz)
 	{
 		return U.WRAPPER_TYPES.containsKey(clazz);
-	}
-
-	/**
-	 * Given a filename, reads an object from it. Note: make sure you are
-	 * reading into the correct class (and version of the class), otherwise
-	 * ClassNotFound exceptions will be thrown.
-	 *
-	 * @param filename
-	 *            the filename to said object to.
-	 * @throws ClassNotFoundException
-	 *             if the class that this is trying to read into does not match
-	 *             the stored file
-	 * @throws FileNotFoundException
-	 *             if the file is not found
-	 * @throws IOException
-	 */
-
-	@SuppressWarnings("unchecked")
-	public static <T extends Serializable> T objReadFromFile(String filename) throws FileNotFoundException, ClassNotFoundException, IOException
-	{
-		ObjectInputStream ois = null;
-		FileInputStream fis = null;
-		LzmaInputStream lis = null;
-		T result = null;
-		try
-		{
-			fis = new FileInputStream(filename);
-			lis = new LzmaInputStream(fis);
-			ois = new ObjectInputStream(lis);
-			result = (T) ois.readObject();
-		} catch (FileNotFoundException e)
-		{
-			U.e("'" + filename + "' not found, throwing exception.", e);
-			throw e;
-		} catch (ClassNotFoundException e)
-		{
-			U.e("'" + filename + "' could not be thrown into, throwing exception.", e);
-			throw e;
-		} catch (IOException e)
-		{
-			U.e("'" + filename + "' file invalid, throwing exception.", e);
-			throw e;
-		} finally
-		{
-			U.tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", ois);
-			U.tryCloseStream("Could not close file input stream while reading from file '" + filename + "'.", fis);
-			U.tryCloseStream("Could not close LZMA input stream while reading from file '" + filename + "'.", lis);
-		}
-		return result;
-	}
-
-	/**
-	 * Given an object (Which must be Serializable!) this will save that to a
-	 * given file.
-	 *
-	 * @param obj
-	 *            the object to save
-	 * @param filename
-	 *            the filename to said object to.
-	 */
-	public static <T extends Serializable> void objWriteToFile(T obj, String filename) throws FileNotFoundException, IOException
-	{
-		FileOutputStream fos = null;
-		ObjectOutputStream oos = null;
-		LzmaOutputStream los = null;
-		U.d("Writing object to filename " + filename + ".", 10);
-		try
-		{
-			fos = new FileOutputStream(filename);
-			los = new LzmaOutputStream(fos);
-			oos = new ObjectOutputStream(los);
-			oos.writeObject(obj);
-		} catch (FileNotFoundException e)
-		{
-			U.e("Error: '" + filename + "' file not found.", e);
-			throw e;
-		} catch (IOException e)
-		{
-			U.e("Error: '" + filename + "' file invalid, throwing exception.", e);
-			throw e;
-		} finally
-		{
-			U.tryCloseStream("Could not close object output stream while reading from file '" + filename + "'.", oos);
-			U.tryCloseStream("Could not close file output stream while writing to file '" + filename + "'.", fos);
-			U.tryCloseStream("Could not close LZMA output stream while writing to file '" + filename + "'.", los);
-		}
 	}
 
 	/**
@@ -467,28 +361,6 @@ public class U
 	}
 
 	/**
-	 * Tries to close the passed stream, if it is not null. If it encounters an
-	 * exception, it logs it and continues.
-	 *
-	 * @param message
-	 *            the message to log on IO exception
-	 * @param stream
-	 *            the stream to try and close
-	 */
-
-	public static void tryCloseStream(String message, Closeable stream)
-	{
-		if (stream != null)
-			try
-			{
-				stream.close();
-			} catch (IOException e)
-			{
-				U.e(message, e);
-			}
-	}
-
-	/**
 	 * Prints the specified warning
 	 *
 	 * @param input
@@ -551,6 +423,6 @@ public class U
 
 	public float rand(float min, float max)
 	{
-		return U.rand.nextFloat() * (max - min) + min;
+		return ThreadLocalRandom.current().nextFloat() * (max - min) + min;
 	}
 }

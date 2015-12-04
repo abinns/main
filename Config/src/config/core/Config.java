@@ -1,7 +1,5 @@
 package config.core;
 
-import global.Globals;
-
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,13 +10,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//Static import of U not used due to cleanup and proper styling, as well as basic readability.
-import backend.U;
-
 import com.impetus.annovention.ClasspathDiscoverer;
 import com.impetus.annovention.Discoverer;
 
+//Static import of U not used due to cleanup and proper styling, as well as basic readability.
+import backend.U;
 import config.core.ExportedParam.MType;
+import global.Globals;
 
 /**
  * <p>
@@ -261,7 +259,7 @@ public class Config
 		U.p(configMembers);
 		try
 		{
-			JSONObject data = new JSONObject(U.readFile(filename));
+			JSONObject data = new JSONObject(Globals.readFile(filename));
 			U.d("Loading config from data:\n" + data.toString(4), 5);
 			for (String curJSONKey : data.keySet())
 				try

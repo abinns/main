@@ -7,41 +7,41 @@ public class TestObj implements FastSerializable
 
 	public TestObj(float x, float y, float xVel, float yVel, float xAccel, float yAccel)
 	{
-		accel = new Vec2F(xAccel, yAccel);
-		vel = new Vec2F(xVel, yVel);
-		pos = new Vec2F(x, y);
-	}
-
-	public void tick()
-	{
-		pos.add(vel);
-		vel.add(accel);
+		this.accel = new Vec2F(xAccel, yAccel);
+		this.vel = new Vec2F(xVel, yVel);
+		this.pos = new Vec2F(x, y);
 	}
 
 	@Override
 	public int getSize()
 	{
 		int size = 0;
-		size += pos.getSize();
-		size += vel.getSize();
-		size += accel.getSize();
+		size += this.pos.getSize();
+		size += this.vel.getSize();
+		size += this.accel.getSize();
 		return size;
 	}
 
 	@Override
 	public void stateGet(UnsafeMemory dst)
 	{
-		pos.stateGet(dst);
-		vel.stateGet(dst);
-		accel.stateGet(dst);
+		this.pos.stateGet(dst);
+		this.vel.stateGet(dst);
+		this.accel.stateGet(dst);
 	}
 
 	@Override
 	public void stateSet(UnsafeMemory src)
 	{
-		pos.stateSet(src);
-		vel.stateSet(src);
-		accel.stateSet(src);
+		this.pos.stateSet(src);
+		this.vel.stateSet(src);
+		this.accel.stateSet(src);
+	}
+
+	public void tick()
+	{
+		this.pos.add(this.vel);
+		this.vel.add(this.accel);
 	}
 
 	@Override

@@ -3,24 +3,26 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Vec2F implements FastSerializable
 {
-	public Vec2F(float x, float y)
+	public static Vec2F random(int minWidth, int minHeight, int maxWidth, int maxHeight)
 	{
-		this.x = x;
-		this.y = y;
+		double nX = ThreadLocalRandom.current().nextDouble(minWidth, maxWidth);
+		double nY = ThreadLocalRandom.current().nextDouble(minHeight, maxHeight);
+		return new Vec2F(nX, nY);
 	}
+
+	public float x;
+
+	public float y;
 
 	public Vec2F(double nX, double nY)
 	{
 		this((float) nX, (float) nY);
 	}
 
-	public float	x;
-	public float	y;
-
-	public void add(float dx, float dy)
+	public Vec2F(float x, float y)
 	{
-		x += dx;
-		y += dy;
+		this.x = x;
+		this.y = y;
 	}
 
 	public void add(double dx, double dy)
@@ -28,17 +30,16 @@ public class Vec2F implements FastSerializable
 		this.add((float) dx, (float) dy);
 	}
 
-	@Override
-	public String toString()
+	public void add(float dx, float dy)
 	{
-		return x + "," + y;
+		this.x += dx;
+		this.y += dy;
 	}
 
-	public static Vec2F random(int minWidth, int minHeight, int maxWidth, int maxHeight)
+	public void add(Vec2F other)
 	{
-		double nX = ThreadLocalRandom.current().nextDouble(minWidth, maxWidth);
-		double nY = ThreadLocalRandom.current().nextDouble(minHeight, maxHeight);
-		return new Vec2F(nX, nY);
+		this.x += other.x;
+		this.y += other.y;
 	}
 
 	@Override
@@ -56,20 +57,20 @@ public class Vec2F implements FastSerializable
 	@Override
 	public void stateGet(UnsafeMemory dst)
 	{
-		dst.putFloat(x);
-		dst.putFloat(y);
+		dst.putFloat(this.x);
+		dst.putFloat(this.y);
 	}
 
 	@Override
 	public void stateSet(UnsafeMemory src)
 	{
-		x = src.getFloat();
-		y = src.getFloat();
+		this.x = src.getFloat();
+		this.y = src.getFloat();
 	}
 
-	public void add(Vec2F other)
+	@Override
+	public String toString()
 	{
-		this.x += other.x;
-		this.y += other.y;
+		return this.x + "," + this.y;
 	}
 }

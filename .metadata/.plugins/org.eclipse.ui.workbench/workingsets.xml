@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workingSetManager>
 <workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1449191774876_1" label="Backend" name="Backend">
-<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/AppServBase" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/Config" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/ExamplePlugin" type="4"/>
 <item elementID="=Backend" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
-<item elementID="=LibSrc" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/LibSrc" type="4"/>
 </workingSet>
 <workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1449192049269_2" label="ArchivedProjects" name="ArchivedProjects">
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/TowerTest" type="4"/>
