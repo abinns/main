@@ -1,2 +1,10 @@
-<h1>Test!</h1>
-<p>Hello World!</p>
+<h1>Misc Projects!</h1>
+<p>Hello! Congratulations, you've managed to stumble onto my little playground. I have a few misc projects here which I play around with.</p>
+<p>This is setup to nicely import into Eclipse. To accomplish this, first, open the folder in eclipse (after cloning, etc, etc). Next, make sure to import the items in the !EclipseImportables folder, this includes cleanup and formatting which matches the workspace, as well as a set of user library imports. These are useful, because between the user lib import and the synchronized .classpath files for each projects, all dependencies should be takencare of by eclipse =] The most you may need to do will be to import projects into the workspace.</p>
+<p>Easiest way to import projects into eclipse once you have them on disk is to create a new project with the name the same as the project you wish to import (e.g., "Backend" or "SerialSync") this will then nicely import all items.</p>
+<p>Currently I'm messing around with sun.misc.Unsafe object serialization =D its fun...*hehehehe*</p>
+<p>Current active projects include:</p>
+<ul>
+<li><h4>NetSync</h4><p>Most active development, this is a project which is planning to attempt to handle the moderately complex problem of high-speed, high-data size, semi data-structure agnostic network-based synchronization. Currently was pretty happy with getting serialization times down to ~30 ns to update a simple object with 2D position, velocity, and accelleration vectors from a byte array. Future plans includes implementing full-graph synchronization for many items, specifically only  sending updates on as as-needed basis.</li>
+<li><h4>ModUpdater</h4><p>A simple utility that's under semi-active development, looks at two directories of minecraft forge mods, and does an intelligent .mod-info based diff, and handles updating with newer versions. Use at own risk, imperfect.</p></li>
+</ul>
