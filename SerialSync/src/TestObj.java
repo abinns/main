@@ -1,3 +1,5 @@
+import backend.fastserialize.FastSerializable;
+import backend.fastserialize.UnsafeMemory;
 
 public class TestObj implements FastSerializable
 {

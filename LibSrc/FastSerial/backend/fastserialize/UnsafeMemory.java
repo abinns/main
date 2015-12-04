@@ -1,3 +1,4 @@
+package backend.fastserialize;
 import java.lang.reflect.Field;
 
 import sun.misc.Unsafe;
@@ -9,7 +10,6 @@ public class UnsafeMemory
 	private static final Unsafe unsafe;
 
 	static
-
 	{
 		try
 		{

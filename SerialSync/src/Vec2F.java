@@ -1,6 +1,9 @@
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import backend.fastserialize.FastSerializable;
+import backend.fastserialize.UnsafeMemory;
+
 public class Vec2F implements FastSerializable
 {
 	public static Vec2F random(int minWidth, int minHeight, int maxWidth, int maxHeight)

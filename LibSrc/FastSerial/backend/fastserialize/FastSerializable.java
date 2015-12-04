@@ -1,3 +1,5 @@
+package backend.fastserialize;
+
 public interface FastSerializable
 {
 	public int getSize();
