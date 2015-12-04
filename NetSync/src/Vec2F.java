@@ -1,31 +1,34 @@
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-import backend.fastserialize.FastSerializable;
-import backend.fastserialize.UnsafeMemory;
-
-public class Vec2F implements FastSerializable
+public class Vec2F
 {
 	public static Vec2F random(int minWidth, int minHeight, int maxWidth, int maxHeight)
 	{
 		double nX = ThreadLocalRandom.current().nextDouble(minWidth, maxWidth);
 		double nY = ThreadLocalRandom.current().nextDouble(minHeight, maxHeight);
-		return new Vec2F(nX, nY);
+		double nZ = ThreadLocalRandom.current().nextDouble(minHeight, maxHeight);
+		return new Vec2F(nX, nY, nZ);
 	}
 
 	public float x;
 
 	public float y;
 
-	public Vec2F(double nX, double nY)
+	public float[] z = new float[10];
+
+	public Vec2F(double nX, double nY, double nZ)
 	{
-		this((float) nX, (float) nY);
+		this((float) nX, (float) nY, (float) nZ);
 	}
 
-	public Vec2F(float x, float y)
+	public Vec2F(float x, float y, float z)
 	{
 		this.x = x;
 		this.y = y;
+		for (int i = 0; i < this.z.length; i++)
+			this.z[i] = i * z;
 	}
 
 	public void add(double dx, double dy)
@@ -46,34 +49,8 @@ public class Vec2F implements FastSerializable
 	}
 
 	@Override
-	public int getSize()
-	{
-		int size = 0;
-		// x
-		size += 4;
-		// y
-		size += 4;
-		return size;
-
-	}
-
-	@Override
-	public void stateGet(UnsafeMemory dst)
-	{
-		dst.putFloat(this.x);
-		dst.putFloat(this.y);
-	}
-
-	@Override
-	public void stateSet(UnsafeMemory src)
-	{
-		this.x = src.getFloat();
-		this.y = src.getFloat();
-	}
-
-	@Override
 	public String toString()
 	{
-		return this.x + "," + this.y;
+		return this.x + "," + this.y + Arrays.toString(z);
 	}
 }

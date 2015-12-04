@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <eclipse-userlibraries version="2">
+    <library name="fastserial" systemlibrary="false">
+        <archive path="/Backend/libcustom/fastserial.jar"/>
+    </library>
+    <library name="gson" systemlibrary="false">
+        <archive javadoc="jar:platform:/resource/Backend/libdoc/gson-2.3.1-javadoc.jar!/" path="/Backend/lib/gson-2.3.1.jar" source="/Backend/libsrc/gson-2.3.1-sources.jar"/>
+    </library>
     <library name="jdi" systemlibrary="false">
         <archive path="/Backend/lib/jdi.jar"/>
+    </library>
+    <library name="kryo" systemlibrary="false">
+        <archive javadoc="jar:platform:/resource/Backend/libdoc/kryo-3.0.3-javadoc.jar!/" path="/Backend/lib/kryo-3.0.3.jar" source="/Backend/libsrc/kryo-3.0.3-sources.jar"/>
     </library>
     <library name="lwjgl3" systemlibrary="false">
         <archive javadoc="jar:platform:/resource/Backend/libdoc/lwjgl3_javadoc.zip!/" nativelibpaths="Backend/libnatives/lwjgl3" path="/Backend/lib/lwjgl3.jar"/>
     </library>
+    <library name="lzmastreams" systemlibrary="false">
+        <archive path="/Backend/libcustom/lzmastreams.jar"/>
+    </library>
     <library name="slick2d" systemlibrary="false">
         <archive nativelibpaths="Backend/libnatives/slick2d" path="/Backend/lib/slick/lwjgl.jar"/>
         <archive javadoc="jar:platform:/resource/Backend/libdoc/slick2d_javadoc.zip!/" path="/Backend/lib/slick/slick.jar"/>
+    </library>
+    <library name="trove" systemlibrary="false">
+        <archive javadoc="jar:platform:/resource/Backend/libdoc/trove-3.1a1_javadocs.zip!/" path="/Backend/lib/trove-3.1a1.jar" source="/Backend/libsrc/trove-3.1a1-src.jar"/>
     </library>
 </eclipse-userlibraries>

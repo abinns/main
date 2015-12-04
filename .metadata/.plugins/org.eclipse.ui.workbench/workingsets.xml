@@ -22,6 +22,7 @@
 <workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1449192543339_5" label="ExampleCode" name="ExampleCode">
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/SilverwolfTutorial" type="4"/>
 <item elementID="=UnsafeSerializationBenchmark" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=KryoNetTest" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 </workingSet>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1436226259052_0" label="Window Working Set" name="Aggregate for window 1436226259051"/>
 </workingSetManager>

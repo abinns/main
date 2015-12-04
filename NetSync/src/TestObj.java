@@ -1,7 +1,4 @@
-import backend.fastserialize.FastSerializable;
-import backend.fastserialize.UnsafeMemory;
-
-public class TestObj implements FastSerializable
+public class TestObj
 {
 	private Vec2F	pos;
 	private Vec2F	vel;
@@ -9,35 +6,9 @@ public class TestObj implements FastSerializable
 
 	public TestObj(float x, float y, float xVel, float yVel, float xAccel, float yAccel)
 	{
-		this.accel = new Vec2F(xAccel, yAccel);
-		this.vel = new Vec2F(xVel, yVel);
-		this.pos = new Vec2F(x, y);
-	}
-
-	@Override
-	public int getSize()
-	{
-		int size = 0;
-		size += this.pos.getSize();
-		size += this.vel.getSize();
-		size += this.accel.getSize();
-		return size;
-	}
-
-	@Override
-	public void stateGet(UnsafeMemory dst)
-	{
-		this.pos.stateGet(dst);
-		this.vel.stateGet(dst);
-		this.accel.stateGet(dst);
-	}
-
-	@Override
-	public void stateSet(UnsafeMemory src)
-	{
-		this.pos.stateSet(src);
-		this.vel.stateSet(src);
-		this.accel.stateSet(src);
+		this.accel = new Vec2F(xAccel, yAccel, yAccel * 1);
+		this.vel = new Vec2F(xVel, yVel, yAccel * 2);
+		this.pos = new Vec2F(x, y, yAccel * 3.141592);
 	}
 
 	public void tick()
