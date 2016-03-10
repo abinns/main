@@ -3,7 +3,7 @@
 <workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1449191774876_1" label="Backend" name="Backend">
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/Config" type="4"/>
 <item elementID="=Backend" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
-<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/LibSrc" type="4"/>
+<item elementID="=LibSrc" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 </workingSet>
 <workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1449192049269_2" label="ArchivedProjects" name="ArchivedProjects">
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/TowerTest" type="4"/>
@@ -20,11 +20,18 @@
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/ModUpdater" type="4"/>
 </workingSet>
 <workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1449192543339_5" label="ExampleCode" name="ExampleCode">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/frozbit" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/SilverwolfTutorial" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/StreamsExample" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/UDPIOStreamsExample" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/KryoNetTest" type="4"/>
-<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/UnsafeSerializationBenchmark" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/LWJGL3Demos" type="4"/>
-<item elementID="=JMonkeyHelloWorld" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/JMonkeyHelloWorld" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/UnsafeSerializationBenchmark" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1457567454801_6" label="OpenPNP" name="OpenPNP">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/OpenPNP" type="4"/>
 </workingSet>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1436226259052_0" label="Window Working Set" name="Aggregate for window 1436226259051"/>
+<mruList name="OpenPNP"/>
 </workingSetManager>

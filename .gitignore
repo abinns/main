@@ -3,6 +3,7 @@
 .gradle
 bin/
 tmp/
+target/
 *.tmp
 *.bak
 *.swp
@@ -10,6 +11,7 @@ tmp/
 local.properties
 .settings/
 .loadpath
+.class
 
 #Include specific metadata .xml regarding the working sets.
 !.metadata/
@@ -52,3 +54,5 @@ Fastex/
 SNMPPlugin/snmp4j-2.2.5-javadoc.jar
 SNMPPlugin/snmp4j-2.2.5.jar
 LWJGL3Demos
+frozbit
+TDG
